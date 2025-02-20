@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade 1</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+
+    <header class="header">
+        <nav class="header-nav">
+            <div>
+                <a id="home-link" class="text-decoration-none text-dark" href="/index.html">
+                    <h1>
+                        Atividade 1
+                    </h1>
+                </a>
+            </div>
+            <div>
+                <button onclick="changeTheme()" id="change-theme" class="btn btn-dark">
+                    Mudar tema!
+                </button>
+                <button onclick="fetchMessage()" class="btn btn-secondary">
+                    Ver uma mensagem!
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+
+    
+        <section class="main-container">
+
+            <h2 id="errand-title">
+                Minha lista de afazeres
+            </h2>
+    
+                <form id="submit-form">
+
+                    <div class="my-2">
+                        <label id="label">
+                            Nome do afazer
+                        </label>
+                        <input class="form-control" id="add-item" type="text"/>
+                    </div>
+
+                    <button id="submit-btn" class="btn btn-secondary" type="submit">
+                        Adicionar
+                    </button>
+        
+                </form>
+
+                <hr />
+                
+                <ul id="errand-list">
+                    <li class="d-flex errand-list_content align-items-center justify-content-between">
+
+                        <p class="errand-list_item">- Fazer compras</p>
+
+                        <button class="btn btn-danger delete-btn">
+                            Deletar
+                        </button>
+
+                    </li>
+                </ul>
+        </section>
+
+ 
+
+    </main>
+    
+    <footer  class="footer d-flex align-items-center gap-3 fw-bold justify-content-center">
+        &copy; Todos os direitos reservados <small id="date"></small>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script >
+
+
+        const date = document.querySelector("#date");
+        date.innerHTML = new Date().getFullYear();
+
+
+        const header = document.querySelector(".header");
+        const footer = document.querySelector(".footer");
+        const homeLink = document.querySelector("#home-link");
+        const submitForm = document.querySelector("#submit-form");
+        const input = document.querySelector("#add-item");
+        const errandList = document.querySelector("#errand-list")
+        const label = document.querySelector("#label")
+        const title = document.querySelector("#errand-title")
+        const deleteBtn = document.querySelector(".delete-btn")
+
+
+        const changeTheme = () => {
+
+            const errandListItems = document.querySelectorAll(".errand-list_item");
+
+
+            document.body.classList.toggle("bg-dark")
+            date.classList.toggle("text-white")
+            header.classList.toggle("bg-secondary")
+            footer.classList.toggle("text-white")
+            homeLink.classList.toggle("text-white")
+            label.classList.toggle("text-white")
+            title.classList.toggle("text-white")
+        
+            
+            errandListItems.forEach((item) => {
+                item.classList.toggle("text-white");
+            });
+
+        }
+
+        submitForm.addEventListener("submit", (e) => {
+
+            e.preventDefault();
+            
+
+            const errand = input.value
+
+
+            if(errand === "") {
+                input.classList.toggle("border-danger")
+                alert("Preencha o campo!")
+                return;
+            }   
+
+            const listItem = document.createElement("li");
+
+            listItem.classList.add("errand-list_item")
+            listItem.innerHTML= `
+                     <div class="d-flex errand-list_content align-items-center justify-content-between">
+
+                        <li class="errand-list_item">- ${errand}</li>
+
+                        <button class="btn delete-btn btn-danger">
+                            Deletar
+                        </button>
+
+                    </div>
+            `
+
+
+            errandList.appendChild(listItem);
+
+            listItem.querySelector(".delete-btn").addEventListener("click", () => {
+                errandList.removeChild(listItem);
+            });
+
+            submitForm.reset()
+            
+        })
+
+
+        input.addEventListener("input", () => {
+            
+            const classlist = input.classList
+
+            if(classlist.contains("border-danger")) {
+                classlist.remove("border-danger")
+            }
+
+        })
+
+
+        function fetchMessage  () {
+
+            fetch("http://demo9104888.mockable.io/message")
+            .then(res => res.json())
+            .then(msg => showMessage(msg))
+            .catch(err => console.log(err))
+
+        }
+
+        function showMessage(data) {
+
+            const {message} = data
+            alert(message)
+
+        }
+
+    </script>
+    <!-- <script type="module" src="./index.js"></script> -->
+</body>
+</html>
