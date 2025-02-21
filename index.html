@@ -22,9 +22,6 @@
                 <button onclick="changeTheme()" id="change-theme" class="btn btn-dark">
                     Mudar tema!
                 </button>
-                <button onclick="fetchMessage()" class="btn btn-secondary">
-                    Ver uma mensagem!
-                </button>
             </div>
         </nav>
     </header>
@@ -41,7 +38,7 @@
                 <form id="submit-form">
 
                     <div class="my-2">
-                        <label id="label">
+                        <label>
                             Nome do afazer
                         </label>
                         <input class="form-control" id="add-item" type="text"/>
@@ -68,6 +65,89 @@
                 </ul>
         </section>
 
+        <section class="container">
+
+            <div class="d-flex align-items-center flex-column gap-2 justify-content-center">
+
+                <button onclick="fetchMessage()" class="btn btn-secondary">
+                    Ver uma mensagem!
+                </button>
+    
+                <p id="message"></p>
+
+            </div>
+
+
+            <hr />
+
+        </section>
+
+        <section class="container">
+
+            <form class="user-form d-flex align-items-center flex-column gap-2 justify-content-center">
+
+                <div class="my-2">
+                    <label>
+                        Seu nome:
+                    </label>
+                    <input 
+                        type="text"
+                        class="form-control"
+                        
+                        id="name"
+                    />
+                    <span id="error-name" class="text-danger"></span>
+                </div>
+                <div class="my-2">
+                    <label>
+                        Seu email:
+                    </label>
+                    <input 
+                        type="email"
+                        class="form-control"
+                        
+                        id="email"
+                    />
+                    <span id="error-email" class="text-danger"></span>
+
+                </div>
+
+                <button class="btn btn-info">
+                    Enviar
+                </button>
+
+
+            </form>
+
+            <hr />
+
+        </section>
+
+        <div class="container mt-4">
+
+            <h2 class="mb-3">Lista de Produtos</h2>
+
+            <input 
+                placeholder="Pesquisar produto..."
+                type="text"
+                class="form-control my-2 search-input"
+            />
+
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Preço</th>
+                        <th>Categoria</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="products-table-body">
+      
+                </tbody>
+            </table>
+        </div>
  
 
     </main>
@@ -77,113 +157,8 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script >
 
+    <script type="text/javascript" src="./index.js"></script> 
 
-        const date = document.querySelector("#date");
-        date.innerHTML = new Date().getFullYear();
-
-
-        const header = document.querySelector(".header");
-        const footer = document.querySelector(".footer");
-        const homeLink = document.querySelector("#home-link");
-        const submitForm = document.querySelector("#submit-form");
-        const input = document.querySelector("#add-item");
-        const errandList = document.querySelector("#errand-list")
-        const label = document.querySelector("#label")
-        const title = document.querySelector("#errand-title")
-        const deleteBtn = document.querySelector(".delete-btn")
-
-
-        const changeTheme = () => {
-
-            const errandListItems = document.querySelectorAll(".errand-list_item");
-
-
-            document.body.classList.toggle("bg-dark")
-            date.classList.toggle("text-white")
-            header.classList.toggle("bg-secondary")
-            footer.classList.toggle("text-white")
-            homeLink.classList.toggle("text-white")
-            label.classList.toggle("text-white")
-            title.classList.toggle("text-white")
-        
-            
-            errandListItems.forEach((item) => {
-                item.classList.toggle("text-white");
-            });
-
-        }
-
-        submitForm.addEventListener("submit", (e) => {
-
-            e.preventDefault();
-            
-
-            const errand = input.value
-
-
-            if(errand === "") {
-                input.classList.toggle("border-danger")
-                alert("Preencha o campo!")
-                return;
-            }   
-
-            const listItem = document.createElement("li");
-
-            listItem.classList.add("errand-list_item")
-            listItem.innerHTML= `
-                     <div class="d-flex errand-list_content align-items-center justify-content-between">
-
-                        <li class="errand-list_item">- ${errand}</li>
-
-                        <button class="btn delete-btn btn-danger">
-                            Deletar
-                        </button>
-
-                    </div>
-            `
-
-
-            errandList.appendChild(listItem);
-
-            listItem.querySelector(".delete-btn").addEventListener("click", () => {
-                errandList.removeChild(listItem);
-            });
-
-            submitForm.reset()
-            
-        })
-
-
-        input.addEventListener("input", () => {
-            
-            const classlist = input.classList
-
-            if(classlist.contains("border-danger")) {
-                classlist.remove("border-danger")
-            }
-
-        })
-
-
-        function fetchMessage  () {
-
-            fetch("http://demo9104888.mockable.io/message")
-            .then(res => res.json())
-            .then(msg => showMessage(msg))
-            .catch(err => console.log(err))
-
-        }
-
-        function showMessage(data) {
-
-            const {message} = data
-            alert(message)
-
-        }
-
-    </script>
-    <!-- <script type="module" src="./index.js"></script> -->
 </body>
 </html>

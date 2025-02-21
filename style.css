@@ -53,3 +53,12 @@ li {
     padding: 10px 0;
     cursor: pointer;
 }
+
+.search-input, .edit-input {
+    width: 300px !important;
+}
+
+.table-edit-input {
+    flex: 1;
+    border-radius: 0 !importantpr;
+}
