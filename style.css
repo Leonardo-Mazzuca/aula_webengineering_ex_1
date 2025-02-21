@@ -19,7 +19,15 @@ li {
     height: 100px;
     background-color: lightblue;
     padding: 20px;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
 
+
+}
+
+.footer {
+    min-height: 150px;
 }
 
 .header-nav {
@@ -30,6 +38,7 @@ li {
 
 .main-container {
     padding: 2rem 9%;
+    margin-top: 100px;
 
 }
 
@@ -60,5 +69,11 @@ li {
 
 .table-edit-input {
     flex: 1;
-    border-radius: 0 !importantpr;
+    border-radius: 0 !important;
+}
+
+.form-card {
+    width: 50%;
+    margin: 2rem 0;
+    margin-top: 150px;
 }
